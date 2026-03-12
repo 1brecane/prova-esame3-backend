@@ -38,7 +38,7 @@ const start = async () => {
         await fastify.register(helmet, { global: true });
         await fastify.register(import("@fastify/sensible"));
 
-        const FASTIFY_PORT = process.env.FASTIFY_PORT || 3000;
+        const FASTIFY_PORT = process.env.PORT || process.env.FASTIFY_PORT || 3000;
         const FASTIFY_HOST = process.env.FASTIFY_HOST || "0.0.0.0";
 
         setupErrorHandlers(fastify);
