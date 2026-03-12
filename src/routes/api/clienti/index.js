@@ -37,7 +37,7 @@ async function clientiRoutes(fastify) {
             tags: ["Clienti"],
             body: {
                 type: 'object',
-                required: ['Nome', 'Via', 'Comune', 'Provincia'],
+                required: ['Nominativo', 'Via', 'Comune', 'Provincia'],
                 properties: {
                     Nominativo: { type: 'string' },
                     Via: { type: 'string' },
