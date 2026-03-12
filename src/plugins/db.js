@@ -86,7 +86,7 @@ async function seedData(connection) {
 }
 
 export default fp(async function dbPlugin(fastify, options) {
-    const pool = mysql.createPool({
+    const poolConfig = process.env.DATABASE_URL || {
         host: process.env.DB_HOST || "localhost",
         port: Number(process.env.DB_PORT || 3306),
         user: process.env.DB_USER || "root",
@@ -95,7 +95,8 @@ export default fp(async function dbPlugin(fastify, options) {
         waitForConnections: true,
         connectionLimit: 10,
         queueLimit: 0,
-    });
+    };
+    const pool = mysql.createPool(poolConfig);
 
     let connection;
     let retries = 10;

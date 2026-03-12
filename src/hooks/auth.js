@@ -29,9 +29,7 @@ export function authHook(fastify) {
 
 export function signUserToken(user) {
     const payload = {
-        operatoreId: user.OperatoreID,
-        nome: user.Nome,
-        cognome: user.Cognome,
+        utenteId: user.UtenteID,
         email: user.Email,
         admin: !!user.Admin,
     };
