@@ -1,0 +1,341 @@
+openapi: 3.0.3
+info:
+  title: Backend prova esame - Gestire delle consegne di un corriere espresso
+  description: API documentation generated from Fastify route schemas
+  version: 1.0.0
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas: {}
+paths:
+  /api/clienti/:
+    get:
+      tags:
+        - Clienti
+      responses:
+        "200":
+          description: Default Response
+    post:
+      tags:
+        - Clienti
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - Nome
+                - Via
+                - Comune
+                - Provincia
+              properties:
+                Nominativo:
+                  type: string
+                Via:
+                  type: string
+                Comune:
+                  type: string
+                Provincia:
+                  type: string
+                Telefono:
+                  type: string
+                Email:
+                  type: string
+                  format: email
+                Note:
+                  type: string
+      responses:
+        "200":
+          description: Default Response
+  /api/clienti/{id}:
+    get:
+      tags:
+        - Clienti
+      parameters:
+        - schema:
+            type: integer
+          in: path
+          name: id
+          required: true
+      responses:
+        "200":
+          description: Default Response
+    put:
+      tags:
+        - Clienti
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Nominativo:
+                  type: string
+                Via:
+                  type: string
+                Comune:
+                  type: string
+                Provincia:
+                  type: string
+                Telefono:
+                  type: string
+                Email:
+                  type: string
+                  format: email
+                Note:
+                  type: string
+      parameters:
+        - schema:
+            type: integer
+          in: path
+          name: id
+          required: true
+      responses:
+        "200":
+          description: Default Response
+    delete:
+      tags:
+        - Clienti
+      parameters:
+        - schema:
+            type: integer
+          in: path
+          name: id
+          required: true
+      responses:
+        "200":
+          description: Default Response
+  /api/consegne/:
+    get:
+      tags:
+        - Consegne
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: stato
+          required: false
+        - schema:
+            type: integer
+          in: query
+          name: cliente
+          required: false
+      responses:
+        "200":
+          description: Default Response
+    post:
+      tags:
+        - Consegne
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - ClienteID
+                - DataRitiro
+                - DataConsegna
+              properties:
+                ClienteID:
+                  type: integer
+                DataRitiro:
+                  type: string
+                  format: date
+                DataConsegna:
+                  type: string
+                  format: date
+                Stato:
+                  type: string
+                  enum:
+                    - da ritirare
+                    - in deposito
+                    - in consegna
+                    - consegnato
+                    - in giacenza
+      responses:
+        "200":
+          description: Default Response
+  /api/consegne/{id}:
+    get:
+      tags:
+        - Consegne
+      parameters:
+        - schema:
+            type: integer
+          in: path
+          name: id
+          required: true
+      responses:
+        "200":
+          description: Default Response
+    put:
+      tags:
+        - Consegne
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ClienteID:
+                  type: integer
+                DataRitiro:
+                  type: string
+                  format: date
+                DataConsegna:
+                  type: string
+                  format: date
+                Stato:
+                  type: string
+                  enum:
+                    - da ritirare
+                    - in deposito
+                    - in consegna
+                    - consegnato
+                    - in giacenza
+      parameters:
+        - schema:
+            type: integer
+          in: path
+          name: id
+          required: true
+      responses:
+        "200":
+          description: Default Response
+    delete:
+      tags:
+        - Consegne
+      parameters:
+        - schema:
+            type: integer
+          in: path
+          name: id
+          required: true
+      responses:
+        "200":
+          description: Default Response
+  /api/tracking/{ChiaveConsegna}/{DataRitiro}:
+    get:
+      tags:
+        - Tracking
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: ChiaveConsegna
+          required: true
+        - schema:
+            type: string
+            format: date
+          in: path
+          name: DataRitiro
+          required: true
+      responses:
+        "200":
+          description: Default Response
+  /api/utenti/login:
+    post:
+      tags:
+        - Utenti
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - Email
+                - Password
+              properties:
+                Email:
+                  type: string
+                  format: email
+                Password:
+                  type: string
+      responses:
+        "200":
+          description: Default Response
+  /api/utenti/:
+    get:
+      tags:
+        - Utenti
+      responses:
+        "200":
+          description: Default Response
+    post:
+      tags:
+        - Utenti
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - Email
+                - Password
+              properties:
+                Email:
+                  type: string
+                  format: email
+                Password:
+                  type: string
+                  minLength: 6
+                Admin:
+                  type: boolean
+      responses:
+        "200":
+          description: Default Response
+  /api/utenti/{id}:
+    put:
+      tags:
+        - Utenti
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - Email
+              properties:
+                Email:
+                  type: string
+                  format: email
+                Password:
+                  type: string
+                  minLength: 6
+                Admin:
+                  type: boolean
+      parameters:
+        - schema:
+            type: integer
+          in: path
+          name: id
+          required: true
+      responses:
+        "200":
+          description: Default Response
+    delete:
+      tags:
+        - Utenti
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: id
+          required: true
+      responses:
+        "200":
+          description: Default Response
+servers:
+  - url: http://localhost:3000
+security:
+  - bearerAuth: []

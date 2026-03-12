@@ -1,0 +1,34 @@
+services:
+    db:
+        image: mysql:8.0
+        container_name: db_corriere_espresso
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: rootpassword
+            MYSQL_DATABASE: corriere_espresso
+            MYSQL_USER: user
+            MYSQL_PASSWORD: password
+        ports:
+            - "3306:3306"
+        volumes:
+            - db_data:/var/lib/mysql
+
+    backend:
+        build: .
+        container_name: corriere_espresso_backend
+        restart: always
+        ports:
+            - "3000:3000"
+        environment:
+            FASTIFY_PORT: 3000
+            FASTIFY_HOST: 0.0.0.0
+            JWT_SECRET: "secret"
+            JWT_EXPIRE: "8h"
+            DB_HOST: db
+            DB_PORT: 3306
+            DB_USER: root
+            DB_PASSWORD: rootpassword
+            DB_NAME: corriere_espresso
+
+volumes:
+    db_data:
