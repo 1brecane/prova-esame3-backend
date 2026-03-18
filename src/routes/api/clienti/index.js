@@ -53,7 +53,7 @@ async function clientiRoutes(fastify) {
     }, async (request, reply) => {
         const { Nominativo, Via, Comune, Provincia, Telefono, Email, Note } = request.body || {};
 
-        if (!Nominativo && !Via && !Comune && !Provincia) {
+        if (!Nominativo || !Via || !Comune || !Provincia) {
             return reply.code(400).send({ error: "Il nominativo , la via, il comune e la provincia sono obbligatori" });
         }
         // Validazione formato mail
@@ -141,7 +141,7 @@ async function clientiRoutes(fastify) {
         onRequest: [fastify.authenticate] 
     }, async (request, reply) => {
         const { id } = request.params;
-
+ 
         // Controllo se ci sono consegne associate al cliente
         const consegne = await db.query("SELECT ConsegnaID FROM Consegne WHERE ClienteID = ?", [id]);
         if (consegne.length > 0) {
